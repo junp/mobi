@@ -10,8 +10,12 @@ Lazyload.prototype = {
 		self.options = $.extend(self.defaults, options || {})
 
 		self.lazyImgs = $(selector)
+		
+		self.bindEvent()
 
-		$(window).trigger('scroll')
+		setTimeout(function(){
+			$(window).trigger('scroll')
+		}, 10)
 	},
 	
 	// 是否可见
@@ -20,16 +24,19 @@ Lazyload.prototype = {
 		var win = window
 		var pageY = win.pageYOffset,
 			btm = win.pageYOffset + win.innerHeight,
-			elTop = $(el).offset().top
+			elTop = $(el).offset().top,
+			elHeight = $(el).height(),
+			elBtm = elTop + elHeight
 
-		return elTop >= pageY && (elTop - self.threshold) <= btm
+		return (elTop >= pageY && (elTop - self.options.threshold) <= btm)
+			|| (elBtm >= pageY && (elBtm <= btm) )
 	},
 		
 	// 事件绑定
 	bindEvent: function(){
 		var self = this
 		$(window).on('scroll', function(){
-			this.loadImgs()
+			self.loadImgs()
 		})
 	},
 
@@ -58,8 +65,8 @@ Lazyload.prototype = {
 
 		self['lazyImgs'].each(function (i, o) {
 			var $img = $(o)
-			if (!self.inViewport($img)) return
-			load($this, i)
+			if (!self.inViewport(o)) return
+			load($img, i)
 		});
 	},
 		
