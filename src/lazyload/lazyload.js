@@ -38,6 +38,9 @@ Lazyload.prototype = {
 		$(window).on('scroll', function(){
 			self.loadImgs()
 		})
+		$(window).on('orientationchange', function(){
+        	self.loadImgs()
+        })
 	},
 
 	// 加载图片
