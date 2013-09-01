@@ -1,10 +1,21 @@
 // https://github.com/jefferkim/muzhi/blob/c9cca06399eca375d6787ea120afe75ee3585a0b/js/_component/lazyload.js
+/**
+ * 图片延迟加载
+ * @class Lazyload
+ * @param selector {string} jquery selector
+ * @param options {object} 可选参数
+ **/
 function Lazyload(selector, options){
 	this.construct(selector, options)
 }
 
 Lazyload.prototype = {
-	// 构造函数
+	/**
+	 * 构造函数
+	 * @method
+	 * @param select {string} jquery selector
+	 * @param options {object} 可选参数
+	 **/
 	construct: function(selector, options){
 		var self = this
 		self.options = $.extend(self.defaults, options || {})
@@ -18,7 +29,11 @@ Lazyload.prototype = {
 		}, 10)
 	},
 	
-	// 是否可见
+	/**
+	 * @method inViewport 是否处于可见区域
+	 * @param el {node} dom element
+	 * @return boolean
+	 **/
 	inViewport: function(el){
 		var self = this
 		var win = window
@@ -32,7 +47,11 @@ Lazyload.prototype = {
 			|| (elBtm >= pageY && (elBtm <= btm) )
 	},
 		
-	// 事件绑定
+	/**
+	 * @method 事件绑定
+	 * 将图片加载函数绑定到滚动（scroll）及屏幕翻转（orientationchange）
+	 * @private
+	 **/
 	bindEvent: function(){
 		var self = this
 		$(window).on('scroll', function(){
@@ -43,7 +62,10 @@ Lazyload.prototype = {
         })
 	},
 
-	// 加载图片
+	/**
+	 * @method 加载图片
+	 * @private
+	 **/
 	loadImgs: function(){
 		var self = this
 		var load = function($img, idx){
