@@ -11,10 +11,14 @@ function Lazyload(selector, options){
 
 Lazyload.prototype = {
 	/**
+	 * @method construct
 	 * 构造函数
-	 * @method
-	 * @param select {string} jquery selector
-	 * @param options {object} 可选参数
+	 * @param {string} selector jquery selector
+	 * @param {object} options 可选参数
+	 * 	@param {number} options.threshold 预可见距离
+	 *  	 默认值为100，向下向下有效
+	 * 	@param {string} options.lazyAttr 需要延迟加载图片属性标识
+	 *   	 默认值为init_src 
 	 **/
 	construct: function(selector, options){
 		var self = this
@@ -31,7 +35,7 @@ Lazyload.prototype = {
 	
 	/**
 	 * @method inViewport 是否处于可见区域
-	 * @param el {node} dom element
+	 * @param {node} el dom element
 	 * @return boolean
 	 **/
 	inViewport: function(el){
@@ -48,7 +52,7 @@ Lazyload.prototype = {
 	},
 		
 	/**
-	 * @method 事件绑定
+	 * @method bindEvent 事件绑定
 	 * 将图片加载函数绑定到滚动（scroll）及屏幕翻转（orientationchange）
 	 * @private
 	 **/
@@ -63,7 +67,7 @@ Lazyload.prototype = {
 	},
 
 	/**
-	 * @method 加载图片
+	 * @method loadImgs 加载图片
 	 * @private
 	 **/
 	loadImgs: function(){
