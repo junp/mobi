@@ -1,7 +1,7 @@
 define(function(require, exports){
     /**
      * 检查是否联网
-     * @function checkOnLine 检测网络是否在线
+     * @function checkOnLine
      * @returns {Boolean} true / false
      */
     function checkOnLine(){
@@ -10,6 +10,7 @@ define(function(require, exports){
 	
      /**
      * html解码
+     * @function decodeHTML
      * @param {String} str 字符串
      * @returns {String} tmp 解码后的字符串
      */
@@ -25,7 +26,7 @@ define(function(require, exports){
 	
     /**
      * html编码
-     * @function
+     * @function encodeHTML
      * @param {String} str 字符串
      * @returns {String} tmp 编码后的字符串
      */
@@ -41,7 +42,7 @@ define(function(require, exports){
 
     /**
      * 获取设备尺寸
-     * @function
+     * @function getDeviceSize
      * @returns {Object} -  {int width, int height, int availWidth, int availHeight}
      */
     function getDeviceSize(){
@@ -58,7 +59,7 @@ define(function(require, exports){
 	
     /**
      * 获取视窗尺寸
-     * @function
+     * @function getViewportSize
      * @returns {Object} -  {int innerWidth, int outerWidth, int innerHeight, int outerHeight}
      */
     function getViewportSize(){
@@ -74,7 +75,7 @@ define(function(require, exports){
 	
     /**
      * 获取设备屏幕显示方向
-     * @function
+     * @function getOrientation
      * @returns {Number} orient 0:竖屏 1:横屏
      */
     function getOrientation(){
@@ -91,7 +92,7 @@ define(function(require, exports){
 	
     /**
      * 过滤脚本
-     * @fucntion
+     * @fucntion filterScript
      * @param {String} str 字符串
      * @returns {String}  过滤后的字符串
      */
@@ -105,7 +106,7 @@ define(function(require, exports){
     };	
     /**
      * 隐藏地址栏
-     * @function
+     * @function hideAddressBar
      */
     function hideAddressBar(){
         setTimeout(function(){
@@ -115,7 +116,7 @@ define(function(require, exports){
 
      /**
      * 将querystring转换成map对象
-     * @function
+     * @function parseQueryString
      * @param {String} qs URL查询串
      * @return {Object} items
      * @example
@@ -143,7 +144,7 @@ define(function(require, exports){
 	
     /**
      * 获取URL参数
-     * @function
+     * @function getParameter
      * @param {String} key 参数名
      * @param {String} i 是否忽略大小写
      * @param {String} querystring URL查询参数
@@ -166,7 +167,7 @@ define(function(require, exports){
 
     /**
      * 生成ta统计script
-     * @function
+     * @function ta
      * @param {Number} 统计ID
      * @param {String} [charset=utf-8] 编码
      **/
