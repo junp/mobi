@@ -87,7 +87,7 @@
 		return new Login(url, options).getLink()
 	}
 
-	/**
+	/*
 	*@function logout
 	*@param {Function} callback
 	*/

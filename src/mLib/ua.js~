@@ -106,45 +106,13 @@
 			 * @property {Number} opera 是否opera
 			 **/
 			var opera = CheckUA(ua, "(Opera|Opera" + anyRegExp + ")" + versionRegExp);
-			/**
-			 * $lends ua
-			 * @property {Number} operamini 是否operamini
-			 **/
 			var operamini = CheckUA(ua, "(Opera Mini)" + versionRegExp);
-			/**
-			 * @lends ua
-			 * @property {Number} safari 是否safari
-			 **/
 			var safari = CheckUA(ua, "(iPhone|iPad|iPod)" + anyRegExp + versionRegExp);
-			/**
-			 * @lends ua
-			 * @property {Number} mobilesafari 是否mobilesafari
-			 **/
 			var mobilesafari = CheckUA(ua, "(Mobile Safari)");
-			/**
-			 * @lends ua
-			 * @property {Number} chrome 是否chrome
-			 **/
 			var chrome = CheckUA(ua, "(Chrome)" + versionRegExp);
-			/**
-			 * @lends ua
-			 * @property {Number} firefox
-			 **/
 			var firefox = CheckUA(ua, "(Firefox)" + versionRegExp);
-			/**
-			 * @lends ua
-			 * @property {Number} mathon
-			 **/
 			var maxthon =  CheckUA(ua, "(Maxthon)" + versionRegExp) || CheckUA(ua, "(Maxthon)");
-			/**
-			 * @lends ua
-			 * @property {Number} mqqbrower
-			 **/
 			var mqqbrowser =  CheckUA(ua, "(MQQBrowser)" + versionRegExp) || CheckUA(ua, "(MQQBrowser)");
-			/**
-			 * @lends ua
-			 * @property {Number} uc
-			 **/
 			var uc = CheckUA(ua, "(UCWEB)(\\d+(\\.\\d+)?)") || CheckUA(ua, "(UCWEB)");
 			//----------------------------------------------------
 			

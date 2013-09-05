@@ -31,7 +31,7 @@
 		/**
 		* 截取字串长度
 		* @function truncation
-		* @param {String} str 原始字串
+		* @param {String} 原始字串
 		* @param {Number} [length=30] 截取保留长度
 		* @param {String} [tail=...] 截取后尾随字串
 		* @return 截取后字串 + tail
