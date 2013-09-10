@@ -1,11 +1,77 @@
 	/**
 	* @name util
 	* @namespace
+	* 工具类
 	*/
 	(function(ns){
 		/**
 		 * @lends util
 		 */
+
+		/**
+		 * 模板解析器txTpl: 
+		 * @function txTpl
+		 * @author: wangfz
+		 * @param {String}  str 模板id || 原始模板text
+		 * @param {Object}  data 数据源json 
+		 * @param {String}  startSelector 可选 要匹配的开始选择符 '<%' 、'[%' 、'<#' ..., 默认为'<%'
+		 * @param {String}  endSelector 可选 要匹配的结束选择符 '%>' 、'%]' 、'#>' ..., 默认为'%>'
+		 * @param {Boolean} isCache 可选 默认为true 
+		 * @return {String}	 
+		 * 注意1: 输出"\"时, 要转义,用"\\"或者实体字符"&#92"; 
+		 *　　　  输出"开始选择符"或"结束选择符"时, 至少其中一个字符要转成实体字符。 
+		 *　　　  html实体对照表：http://www.f2e.org/utils/html_entities.html
+		 * 注意2: 模板拼接时用单引号。
+		 * 注意3: 数据源尽量不要有太多的冗余数据。 
+		 *
+		 * @example 
+		 * 例子
+		 * txTpl('hi, <%=name%>', {name: 'someone'}) // 返回hi, someone
+		 */
+		var txTpl=(function(){
+			var cache={};
+			return function(str, data, startSelector, endSelector, isCache){
+				var fn, d=data, valueArr=[], isCache=isCache!=undefined ? isCache : true;
+				if(isCache && cache[str]){
+					for (var i=0, list=cache[str].propList, len=list.length; i<len; i++){valueArr.push(d[list[i]]);}	
+					fn=cache[str].parsefn;
+				}else{
+					var propArr=[], formatTpl=(function(str, startSelector, endSelector){
+						if(!startSelector){var startSelector='<%';}	
+						if(!endSelector){var endSelector='%>';}					
+						var tpl=str.indexOf(startSelector) == -1 ? document.getElementById(str).innerHTML : str;			
+						return tpl
+							.replace(/\\/g, "\\\\") 											
+							.replace(/[\r\t\n]/g, " ") 											
+							.split(startSelector).join("\t")										
+							.replace(new RegExp("((^|"+endSelector+")[^\t]*)'","g"), "$1\r")	
+							.replace(new RegExp("\t=(.*?)"+endSelector,"g"), "';\n s+=$1;\n s+='")  					
+							.split("\t").join("';\n")											
+							.split(endSelector).join("\n s+='")		
+							.split("\r").join("\\'");		
+					})(str, startSelector, endSelector);	
+					for (var p in d) {propArr.push(p);valueArr.push(d[p]);}	
+					fn = new Function(propArr, " var s='';\n s+='" + formatTpl+ "';\n return s");
+					isCache && (cache[str]={parsefn:fn, propList:propArr});
+				}
+				
+				try{
+					return fn.apply(null,valueArr);
+				}catch(e){
+					function globalEval(strScript) {
+						var ua = navigator.userAgent.toLowerCase(), head=document.getElementsByTagName("head")[0], script = document.createElement("script"); 
+						if(ua.indexOf('gecko') > -1 && ua.indexOf('khtml') == -1){window['eval'].call(window, fnStr); return}				
+						script.innerHTML = strScript; 
+						head.appendChild(script); 
+						head.removeChild(script);
+					}	
+					
+					var fnName='txTpl' + new Date().getTime(), fnStr='var '+ fnName+'='+fn.toString();
+					globalEval(fnStr);
+					window[fnName].apply(null,valueArr);		
+				}			
+			}
+		})();
 
 		/**
 		* 取url参数
@@ -19,7 +85,7 @@
 		* getParameter('foo')	// return bar
 		*/
 		var getParameter = function(name, str, decode){
-		    var reg = new RegExp( "(?:^|[&\?])"+name+"=([^&#]*)(?:[&#].*|$)");
+		    var reg = new RegExp( "(?:^|[&?])"+name+"=([^&#]*)(?:[&#].*|$)");
 			var val = (str||location.search||'').match(reg);
 			if(val){
 				val = val[1];
@@ -40,11 +106,11 @@
 		*/
 		var truncation = function(str, length, tail){
 			length = length || 30,
-			tail = tail ? tail : '...';
+			tail = typeof tail !== 'undefined' ? tail : '...';
 			var re = /[^\x00-\xff]/g;
 			var tmp = str.replace(/\*/g,'o').replace(re, '**');
 			var tmp2 = tmp.substring(0, length);
-			var xLen = tmp2.split('\*').length - 1;
+			var xLen = tmp2.split('*').length - 1;
 			var chNum = xLen / 2;
 			length = length - chNum;
 			var res = str.substring(0, length);
@@ -58,9 +124,9 @@
 		 */
 		function checkOnLine(){
 			return (navigator.onLine);
-		};
+		}
 		
-		 /**
+		/**
 		 * html解码
 		 * @function decodeHTML
 		 * @param {String} str 字符串
@@ -74,7 +140,7 @@
 				tmp = tmp.replace(/&#38;/g, "&");
 				
 			return tmp;
-		};
+		}
 		
 		/**
 		 * html编码
@@ -90,7 +156,7 @@
 				tmp = tmp.replace(/</g, "&#60;");
 			
 			return tmp;
-		};
+		}
 
 		/**
 		 * 获取设备尺寸
@@ -107,7 +173,7 @@
 				availWidth : scr.availWidth,
 				availHeight : scr.availHeight
 			};
-		};	
+		}
 		
 		/**
 		 * 获取视窗尺寸
@@ -123,7 +189,7 @@
 				outerWidth : win.outerWidth,
 				outerHeight : win.outerHeight
 			};
-		};
+		}
 		
 		/**
 		 * 获取设备屏幕显示方向
@@ -140,7 +206,7 @@
 			}else{
 				return 0;  //竖屏
 			}
-		};	
+		}
 		
 		/**
 		 * 过滤脚本
@@ -155,7 +221,7 @@
 			str = str.replace(/[\"\'][\s ]*([^=\"\'\s ]+[\s ]*=[\s ]*[\"\']?[^\"\']+[\"\']?)+/gi, ""); //过滤HTML属性注入
 			str = str.replace(/[\s ]/g, "&nbsp;"); //替换空格
 			return str;
-		};	
+		}
 		/**
 		 * 隐藏地址栏
 		 * @function hideAddressBar
@@ -164,17 +230,17 @@
 			setTimeout(function(){
 				window.scrollTo(0, 1);
 			}, 0);
-		};
+		}
 
-		 /**
+		/**
 		 * 将querystring转换成map对象
 		 * @function parseQueryString
 		 * @param {String} qs URL查询串
 		 * @return {Object} items
 		 * @example
-		 * var qs = 'a=1&b=2&c=3'
+		 * var qs = 'foo=bar'
 		 * parseQueryString(qs)
-		 * returns {a: 1, b: 2, c: 3}
+		 * returns {foo:'bar'}
 		 */
 		function parseQueryString(qs){
 			qs = (qs || "");
@@ -192,7 +258,7 @@
 			pattern = null; matcher = null;
 
 			return items;
-		};
+		}
 
 		/**
 		 * 生成ta统计script
@@ -206,6 +272,7 @@
 		}
 		
 		util = {
+			txTpl: txTpl,
 			getParameter: getParameter,
 			truncation: truncation,
 			checkOnLine: checkOnLine,
@@ -220,4 +287,4 @@
 			ta: ta
 		};
 		ns.util = util;
-	})(mLib);
+	})(cbLib);

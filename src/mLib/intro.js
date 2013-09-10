@@ -1,6 +1,6 @@
 define(function(require, exports){
 	/**
-	 * @name mLib
-	 * @namespace mLib命名空间
+	 * @name cbLib
+	 * @namespace cbLib命名空间
 	 **/
-	var mLib = {};
+	var cbLib = {};

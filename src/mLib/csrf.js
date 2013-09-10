@@ -1,6 +1,7 @@
-	/*
+	/**
 	* @name csrf
 	* @namespace
+	* csrf 方法集
 	*/
 	(function(ns) {
 		var config = ns.config;
@@ -213,20 +214,25 @@
 			/** @lends csrf */
 
 			/**
-			* @method getToken
-			* @returns token
+			* 生成token
+			* @function getToken
+			* @returns {String} token
 			* @example
+			* 例：
 			* csrf.getToken();
 			*/
 			getToken: _getAntiCSRFToken,
 			/**
-			* @method md5
-			* @return md5
+			* md5加密串
+			* @function md5
+			* @param {String}
+			* @returns {String} md5
 			* @example
+			* 例：
 			* csrf.md5('foo')
 			*/
 			md5: _md5
 		};
 
 		ns.csrf = csrf;
-	})(mLib);
+	})(cbLib);
