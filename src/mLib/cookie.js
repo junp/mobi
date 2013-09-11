@@ -1,7 +1,7 @@
 	/**
 	 * @name cookie
 	 * @namespace
-	 * cookie 操作方法集
+	 * cookie 操作方法集 
 	 */
 	(function(ns){
 		var config = ns.config;
