@@ -1,6 +1,6 @@
 	/**
 	 * @name ua
-	 * @namespace 
+	 * @namespace
 	 * 检测UA
 	 */
 	(function(ns){  
