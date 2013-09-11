@@ -1,7 +1,7 @@
 	/**
 	* @name csrf
 	* @namespace
-	* csrf 方法集
+	* csrf 方法集 
 	*/
 	(function(ns) {
 		var config = ns.config;
