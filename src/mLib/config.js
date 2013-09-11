@@ -1,8 +1,8 @@
-	 /**
-	 * @name config
-	 * @namespace
-	 * 全局配置 
-	 */
+	/**
+	* @name config
+	* @namespace
+	* 全局配置 
+	*/
 	(function(ns){
 		var config = {
 			/**

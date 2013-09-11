@@ -31,28 +31,29 @@
 		var txTpl=(function(){
 			var cache={};
 			return function(str, data, startSelector, endSelector, isCache){
-				var fn, d=data, valueArr=[], isCache=isCache!=undefined ? isCache : true;
+				var fn, d=data, valueArr=[];
+				isCache = isCache !== undefined ? isCache : true;
 				if(isCache && cache[str]){
 					for (var i=0, list=cache[str].propList, len=list.length; i<len; i++){valueArr.push(d[list[i]]);}	
 					fn=cache[str].parsefn;
 				}else{
 					var propArr=[], formatTpl=(function(str, startSelector, endSelector){
-						if(!startSelector){var startSelector='<%';}	
-						if(!endSelector){var endSelector='%>';}					
+						if(!startSelector){startSelector='<%';}	
+						if(!endSelector){endSelector='%>';}					
 						var tpl=str.indexOf(startSelector) == -1 ? document.getElementById(str).innerHTML : str;			
 						return tpl
-							.replace(/\\/g, "\\\\") 											
-							.replace(/[\r\t\n]/g, " ") 											
-							.split(startSelector).join("\t")										
-							.replace(new RegExp("((^|"+endSelector+")[^\t]*)'","g"), "$1\r")	
-							.replace(new RegExp("\t=(.*?)"+endSelector,"g"), "';\n s+=$1;\n s+='")  					
-							.split("\t").join("';\n")											
-							.split(endSelector).join("\n s+='")		
-							.split("\r").join("\\'");		
+							.replace(/\\/g, "\\\\")					
+							.replace(/[\r\t\n]/g, " ")
+							.split(startSelector).join("\t")					
+							.replace(new RegExp("((^|"+endSelector+")[^\t]*)'","g"), "$1\r")
+							.replace(new RegExp("\t=(.*?)"+endSelector,"g"), "';\n s+=$1;\n s+='")			
+							.split("\t").join("';\n")							
+							.split(endSelector).join("\n s+='")
+							.split("\r").join("\\'");
 					})(str, startSelector, endSelector);	
 					for (var p in d) {propArr.push(p);valueArr.push(d[p]);}	
 					fn = new Function(propArr, " var s='';\n s+='" + formatTpl+ "';\n return s");
-					isCache && (cache[str]={parsefn:fn, propList:propArr});
+					if(isCache){cache[str]={parsefn:fn, propList:propArr}}
 				}
 				
 				try{
@@ -85,7 +86,7 @@
 		* getParameter('foo')	// return bar
 		*/
 		var getParameter = function(name, str, decode){
-		    var reg = new RegExp( "(?:^|[&?])"+name+"=([^&#]*)(?:[&#].*|$)");
+			var reg = new RegExp( "(?:^|[&?])"+name+"=([^&#]*)(?:[&#].*|$)");
 			var val = (str||location.search||'').match(reg);
 			if(val){
 				val = val[1];
@@ -105,8 +106,8 @@
 		* truncation('abcdefg', 4); // return abcd...
 		*/
 		var truncation = function(str, length, tail){
-			length = length || 30,
-			tail = typeof tail !== 'undefined' ? tail : '...';
+			length = length || 30;
+			tail = typeof tail === 'string' ? tail : '...';
 			var re = /[^\x00-\xff]/g;
 			var tmp = str.replace(/\*/g,'o').replace(re, '**');
 			var tmp2 = tmp.substring(0, length);
@@ -252,7 +253,7 @@
 			var matcher = null;
 			var items = {};
 
-			while(null != (matcher = pattern.exec(s))){
+			while(null !== (matcher = pattern.exec(s))){
 				items[matcher[1]] = filterScript(matcher[2]);
 			}
 			pattern = null; matcher = null;
@@ -267,8 +268,8 @@
 		 * @param {String} [charset=utf-8] 编码
 		 **/
 		function ta(id, charset){
-			charset || (charset = 'utf-8');
-		document.write('<script charset="' + charset + '" src="http://tajs.qq.com/stats?sId="' + id + '"><\/script>');
+			var cs = charset || 'utf-8';
+		document.write('<script charset="' + cs + '" src="http://tajs.qq.com/stats?sId="' + id + '"><\/script>');
 		}
 		
 		util = {

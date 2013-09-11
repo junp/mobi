@@ -16,7 +16,7 @@
 					var matcher = null;
 					var p = new RegExp(key, "gi");
 
-					if(null != (matcher = p.exec(ua))){
+					if(null !== (matcher = p.exec(ua))){
 						result = matcher[2];
 						if(result){
 							result = parseFloat(result, 10);
@@ -30,7 +30,7 @@
 					
 					return result;
 				};
-			};
+			}
 			
 			//版本正则
 			var versionRegExp = "[\\s\\/]{1}(\\d+(\\.\\d+)?)";

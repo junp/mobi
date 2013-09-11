@@ -15,12 +15,12 @@
 		}
 		Login.prototype = {
 			/**
-			 登录类构造函数
-			 @method construct
-			 @param url {string} 登录成功回跳链接
-			 @private
-			 @param options {object}
-			 **/
+			登录类构造函数
+			@method construct
+			@param url {string} 登录成功回跳链接
+			@private
+			@param options {object}
+			**/
 			construct: function(url, options){
 				var self = this
 				if(typeof url == 'object'){
@@ -32,13 +32,12 @@
 			},
 			
 			/**
-			 返回登录链接
-			 @method getLink
-			 @private
-			 @return {String} 登录链接
-			 **/
+			返回登录链接
+			@method getLink
+			@private
+			@return {String} 登录链接
+			**/
 			getLink: function(){
-				
 				var temp = []
 				var options = this.options
 				for(var p in options){
