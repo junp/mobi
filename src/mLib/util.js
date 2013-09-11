@@ -1,7 +1,7 @@
 	/**
 	* @name util
 	* @namespace
-	* 工具类
+	* 工具类 
 	*/
 	(function(ns){
 		/**
