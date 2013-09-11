@@ -1,7 +1,7 @@
 	/**
 	* @name user
 	* @namespace
-	* 用户模块（登录、退出、个人信息）
+	* 用户模块（登录、退出、个人信息） 
 	*/
 	(function(ns){
 		var ua = ns.ua
